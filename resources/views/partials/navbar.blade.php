@@ -196,7 +196,7 @@
                             {{ Auth::user()->name }}
                         </a>
 
-                        <div class="dropdown-content bg-primary-e text-white">
+                        <div class="dropdown-content bg-primary-e text-white" style="z-index: 3">
                             <a id="ddUser" class="bg-primary text-white" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">

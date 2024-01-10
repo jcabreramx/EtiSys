@@ -15,13 +15,14 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
+
     @include('partials.styles')
     <!-- Scripts -->
-    {{-- <script src="js/script.js"></script> --}}
-    {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body>
+    @include('popper::assets')
     <div class="wrapper">
         <div id="home-section" class="home-section">
             @include('partials.navbar')

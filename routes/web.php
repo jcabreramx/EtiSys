@@ -32,6 +32,11 @@ Route::get('apiUsuarios', [UsuariosController::class, 'apiUsuarios'])->name('api
 // =============================== Clientes ====================================
 Route::get('clientes', [ClientesController::class, 'index'])->name('Clientes');
 Route::get('apiClientes', [ClientesController::class, 'apiClientes'])->name('apiClientes');
+Route::get('apiContactosAll', [ClientesController::class, 'apiContactosAll'])->name('apiContactosAll');
+Route::get('apiContactos', [ClientesController::class, 'apiContactos'])->name('apiContactos');
+Route::get('apiContactosTel', [ClientesController::class, 'apiContactosTel'])->name('apiContactosTel');
+Route::get('getCliente', [ClientesController::class, 'getCliente'])->name('getCliente');
+Route::post('guardarCliente', [ClientesController::class, 'guardarCliente'])->name('guardarCliente');
 
 // Auth::routes();
 

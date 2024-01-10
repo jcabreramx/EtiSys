@@ -93,3 +93,11 @@ $(document).ready(function () {
     });
 
 });
+
+function nuevoUsuario(){
+    $('#mod_Register').modal('show');
+}
+
+function closeMRegister(){
+    $('#mod_Register').modal('hide');
+}

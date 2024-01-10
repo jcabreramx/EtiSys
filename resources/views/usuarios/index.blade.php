@@ -12,7 +12,7 @@
             <div id="card_bodyUsuarios" class="card-body">
                 <div class="box_tooltip">
                     <button class="box btn_round_gl flecha_down" alt="NUEVO USUARIO" id="btnNuevoUsuario"
-                        onclick="nuevoUsuario(), openModalUsuario()" type="button">
+                        onclick="nuevoUsuario()" type="button">
                         <i class="fas fa-plus-circle"></i>
                     </button>
                 </div>
@@ -44,6 +44,7 @@
 
 
     </div>
+    {{-- @include('auth.register') --}}
     <script src="js/usuarios.js" defer></script>
 
 @endsection

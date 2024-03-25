@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\PermisosTrait;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+
+    use PermisosTrait;
     /**
      * Create a new controller instance.
      *
@@ -23,6 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $this->permisos();
         return view('home');
     }
 }

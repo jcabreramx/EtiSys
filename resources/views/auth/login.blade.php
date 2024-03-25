@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
+<div class="container mt-5">
+    <div class="row justify-content-center" style="margin-top: 20vh">
         <div class="col-md-4">
             <div class="card">
                 <div class="card-header">
@@ -9,7 +9,7 @@
                         <img src="img/logo.png" alt="EtiSys">
                     </div>
                     <div class="text-center">
-                        <h5>acceso<b>ETISYS</b></h5>
+                        <h5>acceso<b>ETISYSAdmin</b></h5>
                     </div>
                 </div>
 
@@ -45,7 +45,7 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3">
+                        {{-- <div class="row mb-3">
                             <div class="col-md-6 offset-md-4">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
@@ -55,21 +55,21 @@
                                     </label>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="row mb-0">
                             <div class="col-md-12 text-center">
                                 <button type="submit" class="btn btn-primary">
-                                    Acceso
+                                    Ingresar
                                 </button>
                             </div>
-                            <div class="col-md-12 text-center">
+                            {{-- <div class="col-md-12 text-center">
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         Olvidaste tu Password?'
                                     </a>
                                 @endif
-                            </div>
+                            </div> --}}
                         </div>
                     </form>
                 </div>

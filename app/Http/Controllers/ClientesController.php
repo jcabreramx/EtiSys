@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\det_CP_ContactosEmpresas;
 use App\Models\mst_CP_Empresas;
+use App\Traits\PermisosTrait;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,6 +12,7 @@ use Yajra\DataTables\DataTables;
 
 class ClientesController extends Controller
 {
+    use PermisosTrait;
     public function __construct()
     {
         $this->middleware('auth');
@@ -18,6 +20,7 @@ class ClientesController extends Controller
 
     public function index()
     {
+        $this->permisos();
 
         // $page = request('page', 1);
         // $pageSize = 15;
@@ -51,17 +54,21 @@ class ClientesController extends Controller
         //     '',
         // ]);
         // $links = $clientes->links();
+        if (session('AccesoClientes') == 1) {
+            $combo_tipo = DB::select('exec sp_cat_CP_TiposCliente_SelectAll');
+            $combo_grupo = DB::select('exec sp_cat_CP_Grupos_SelectAll');
+            $combo_origen = DB::select('exec sp_cat_CP_TiposContacto_SelectAll');
+            $combo_agente = DB::select('exec sp_mst_CP_Usuarios_SelectAll');
+            $combo_sectores = DB::select('exec sp_cat_CP_Sectores_SelectAll');
+            $combo_estados = DB::select('exec sp_cat_CP_Estados_SelectAll');
+            // $contactos = det_CP_ContactosEmpresas::paginate(100);
+            // $contactos = DB::table('det_CP_ContactosEmpresas')->paginate(100);
 
-        $combo_tipo = DB::select('exec sp_cat_CP_TiposCliente_SelectAll');
-        $combo_grupo = DB::select('exec sp_cat_CP_Grupos_SelectAll');
-        $combo_origen = DB::select('exec sp_cat_CP_TiposContacto_SelectAll');
-        $combo_agente = DB::select('exec sp_mst_CP_Usuarios_SelectAll');
-        $combo_sectores = DB::select('exec sp_cat_CP_Sectores_SelectAll');
-        $combo_estados = DB::select('exec sp_cat_CP_Estados_SelectAll');
-        // $contactos = det_CP_ContactosEmpresas::paginate(100);
-        // $contactos = DB::table('det_CP_ContactosEmpresas')->paginate(100);
+            return view('clientes.index', compact('combo_tipo', 'combo_grupo', 'combo_origen', 'combo_agente', 'combo_sectores', 'combo_estados'));
+        } else {
+            return redirect()->route('home');
+        }
 
-        return view('clientes.index', compact('combo_tipo', 'combo_grupo', 'combo_origen', 'combo_agente', 'combo_sectores', 'combo_estados'));
     }
 
     public function apiClientes(Request $request)
@@ -115,34 +122,61 @@ class ClientesController extends Controller
             $ultimaLetra = $request->ultimaLetra;
         }
 
-        if ($nombre != null || $nombreCorto != null || $origen != null || $tipo != null || $grupo != null || $agente != null || $grupoIds != null || $ultimaLetra != null) {
-            $clientes = DB::select('exec sp_mst_CP_Empresas_Buscar ?, ?, ?, ?, ?, ?, ?, ?', [
-                $nombre,
-                $nombreCorto,
-                $origen,
-                $tipo,
-                $grupo,
-                $agente,
-                $grupoIds,
-                $ultimaLetra,
 
-                // $nombre,
-                // $nombreCorto,
-                // $origen,
-                // $tipo,
-                // $grupo,
-                // $agente,
-                // $grupoIds,
-                // $ultimaLetra,
-            ]);
-        } else {
-            // $count = count(DB::table('v_Empresas')->get());
-            $clientes = DB::table('v_Empresas')->limit(1000)->get();
-            // $clientes = DB::table('v_Empresas')->where('vchEmpresaID', '>', '00064426')->get();
-        }
+        $clientes = DB::select('exec sp_mst_CP_Empresas_Buscar ?, ?, ?, ?, ?, ?, ?, ?', [
+            $nombre,
+            $nombreCorto,
+            $origen,
+            $tipo,
+            $grupo,
+            $agente,
+            $grupoIds,
+            $ultimaLetra,
+        ]);
 
+
+        // if ($nombre != null || $nombreCorto != null || $origen != null || $tipo != null || $grupo != null || $agente != null || $grupoIds != null || $ultimaLetra != null) {
+        //     $clientes = DB::select('exec sp_mst_CP_Empresas_Buscar ?, ?, ?, ?, ?, ?, ?, ?', [
+        //         $nombre,
+        //         $nombreCorto,
+        //         $origen,
+        //         $tipo,
+        //         $grupo,
+        //         $agente,
+        //         $grupoIds,
+        //         $ultimaLetra,
+
+        //         // $nombre,
+        //         // $nombreCorto,
+        //         // $origen,
+        //         // $tipo,
+        //         // $grupo,
+        //         // $agente,
+        //         // $grupoIds,
+        //         // $ultimaLetra,
+        //     ]);
+        // } else {
+        //     // $count = count(DB::table('v_Empresas')->get());
+        //     // $clientes = DB::table('v_Empresas')->limit(1000)->get();
+        //     $clientes = DB::table('v_Empresas')->get();
+        //     // $clientes = DB::table('v_Empresas')->orderBy('vchEmpresaID', 'asc')->lazy();
+        //     // $clientes = DB::table('v_Empresas')->where('vchTipoCliente', 'CTE ACTIVO')->get();
+        //     // $clientes = DB::table('v_Empresas')->where('vchEmpresaID', '>', '00064426')->get();
+        // }
 
         return DataTables::of($clientes)
+        ->addColumn('AccesoClientes', function () {
+            $AccesoClientes = trim(session('AccesoClientes'));
+            return $AccesoClientes;
+        })
+        ->addColumn('EditarClientes', function () {
+            $EditarClientes = trim(session('EditarClientes'));
+            return $EditarClientes;
+        })
+        ->addColumn('EliminarClientes', function () {
+            $EliminarClientes = trim(session('EliminarClientes'));
+            return $EliminarClientes;
+        })
             ->make(true);
     }
 

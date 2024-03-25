@@ -10,6 +10,20 @@ function ajustarTablas(table, heightTable) {
     $('#' + table).closest('.dataTables_scrollBody').css('height', heightTable);
 }
 
+function selectRow(tabla) {
+    $('#' + tabla).on('click', 'tr', function () {
+        var row = $(this);
+        var td = document.getElementsByTagName('tr');
+
+        for (var i = 0; i < td.length; i++) {
+            td[i].classList.remove('selectedCte');
+        }
+
+        row[0].classList = 'selectedCte';
+    });
+
+}
+
 function selectRowClientes(tabla) {
     $('#' + tabla).on('click', 'tr', function () {
         var row = $(this);
@@ -23,6 +37,7 @@ function selectRowClientes(tabla) {
     });
 
 }
+
 function selectRowContactos(tabla) {
     $('#' + tabla).on('click', 'tr', function () {
         var row = $(this);

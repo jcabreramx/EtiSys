@@ -1,13 +1,13 @@
 serve = base_path;
 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr("content");
 
-$(document).ajaxStart(function () {
-    loaderON();
-});
+// $(document).ajaxStart(function () {
+//     loaderON();
+// });
 
-$(document).ajaxStop(function () {
-    loaderOut();
-});
+// $(document).ajaxStop(function () {
+//     loaderOut();
+// });
 
 $.ajaxSetup({
     headers: {

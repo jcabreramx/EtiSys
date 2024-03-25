@@ -1,13 +1,13 @@
 serve = base_path;
 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr("content");
 
-$(document).ajaxStart(function () {
-    loaderON();
-});
+// $(document).ajaxStart(function () {
+//     loaderON();
+// });
 
-$(document).ajaxStop(function () {
-    loaderOut();
-});
+// $(document).ajaxStop(function () {
+//     loaderOut();
+// });
 
 $.ajaxSetup({
     headers: {
@@ -28,8 +28,8 @@ $(document).ready(function () {
 
 
     cargarClientes();
-    cargarContactosAll();
-    loaderOut();
+    // cargarContactosAll();
+    // loaderOut();
 });
 
 function iniciar() {
@@ -68,7 +68,7 @@ function iniciar() {
         dom: '<"top">rt<"bottom"><"clear">',
         initComplete: function (settings, json) {
             ajustarTablas('tblContactos', heightTableCon);
-            loaderOut();
+            // loaderOut();
         },
     });
 
@@ -82,7 +82,7 @@ function iniciar() {
         dom: '<"top">rt<"bottom"><"clear">',
         initComplete: function (settings, json) {
             ajustarTablas('tblContactosTel', heightTableCon);
-            loaderOut();
+            // loaderOut();
         },
     });
 
@@ -110,8 +110,8 @@ function cargarClientes() {
     homeHeigth = document.getElementById("home-section");
     cardGeneral = document.getElementById("card_general");
     cardGeneral.style.height = (homeHeigth.clientHeight - 65).toString() + "px";
-    heightTable = (cardGeneral.clientHeight - 355).toString() + "px";
-    heightTableCon = (homeHeigth.clientHeight - cardGeneral.clientHeight + 30).toString() + "px";
+    heightTable = (cardGeneral.clientHeight - 305).toString() + "px";
+    heightTableCon = (homeHeigth.clientHeight - cardGeneral.clientHeight - 10).toString() + "px";
 
     nombre = $('#searchNombre').val();
     nombreCorto = $('#searchNombreCorto').val();
@@ -128,18 +128,17 @@ function cargarClientes() {
 
     tblClientes = $('#tblClientes').DataTable({
         destroy: true,
-        pageResize: true,
+        pageResize: false,
         searchable: false,
         processing: false,
         serverSide: true,
-        // rowId: "Id_Ticket",
         select: false,
         scrollY: false,
         scrollX: true,
         scrollCollapse: false,
         paginate: true,
         stateSave: false,
-        deferRender: false,
+        deferRender: true,
         order: [
             [0, "ASC"],
         ],
@@ -156,7 +155,6 @@ function cargarClientes() {
                 agente: agente,
                 grupoIds: grupoIds,
                 ultimaLetra: ultimaLetra,
-
             },
         },
         language: {
@@ -167,7 +165,6 @@ function cargarClientes() {
             {
                 targets: [7, 8],
                 orderable: false
-                // render: $.fn.dataTable.render.moment(FROM_PATTERN, TO_PATTERN),
             },
         ],
         columns: [
@@ -188,7 +185,7 @@ function cargarClientes() {
                 title: "Nombre Corto",
             },
             {
-                data: 'vchDescripcionTipoCliente', // 3
+                data: 'vchTipoCliente', // 3
                 title: "Tipo",
             },
             {
@@ -255,12 +252,51 @@ function cargarClientes() {
 
 }
 
+$('#searchTipo').change(function(){
+    loaderON();
+    if ($(this).val() == 'CTE ACTIVO') {
+        document.getElementById('searchTipo').style.fontWeight = 'bold';
+    } else {
+        document.getElementById('searchTipo').style.fontWeight = '';
+    }
+    cargarClientes();
+})
+
+$('#searchGrupo').change(function(){
+    loaderON();
+    cargarClientes();
+})
+
+$('#searchOrigen').change(function(){
+    loaderON();
+    cargarClientes();
+})
+
+$('#searchAgente').change(function(){
+    loaderON();
+    cargarClientes();
+})
+
+$("#searchNombre").keypress(function (e) {
+    if (e.which == 13) {
+        loaderON();
+        cargarClientes();
+    }
+});
+
+$("#searchNombreCorto").keypress(function (e) {
+    if (e.which == 13) {
+        loaderON();
+        cargarClientes();
+    }
+});
+
 function limpiarClientes() {
     ajustarTablas('tblClientes', heightTable);
     nombre = $('#searchNombre').val('');
     nombreCorto = $('#searchNombreCorto').val('');
     origen = $('#searchOrigen').val('');
-    tipo = $('#searchTipo').val('');
+    tipo = $('#searchTipo').val('CTE ACTIVO');
     grupo = $('#searchGrupo').val('');
     agente = $('#searchAgente').val('');
     var table = $('#tblClientes').DataTable();
@@ -270,7 +306,7 @@ function limpiarClientes() {
     var tableCT = $('#tblContactosTel').DataTable();
     tableCT.clear();
 
-    iniciar();
+    cargarClientes();
 }
 
 function cargarContactos(id) {
@@ -350,7 +386,7 @@ function cargarContactos(id) {
         ],
         initComplete: function (settings, json) {
             ajustarTablas('tblContactos', heightTableCon);
-            loaderOut();
+            // loaderOut();
         },
     });
 
@@ -410,7 +446,7 @@ function cargarContactosTel(empresaId, id) {
         ],
         initComplete: function (settings, json) {
             ajustarTablas('tblContactosTel', heightTableCon);
-            loaderOut();
+            // loaderOut();
         },
     });
 
@@ -515,7 +551,7 @@ function cargarContactosAll() {
         ],
         initComplete: function (settings, json) {
             ajustarTablas('tblContactosAll', heightTableConAll);
-            loaderOut();
+            // loaderOut();
         },
         infoCallback: function (settings, start, end, max, total, pre) {
             if (total == 0) return "<strong class='ml-2'>No se econtraron Contactos</strong>";
@@ -611,7 +647,7 @@ function editarCliente(id) {
         data: {
             id: id,
         },
-        success: function(data){
+        success: function (data) {
             $('#titleCliente').text('Editar Cliente');
             $('#vchClave').val(data[0].vchClave);
 
@@ -661,7 +697,7 @@ function editarCliente(id) {
 
             $('#AddOrEditCliente').modal('show');
         },
-        error: function(){
+        error: function () {
             alert('Error en Servidor');
         }
     })
@@ -731,7 +767,7 @@ function cargarContactosEdit(id) {
         ],
         initComplete: function (settings, json) {
             // ajustarTablas('tblContactos', heightTableCon);
-            loaderOut();
+            // loaderOut();
         },
     });
 
@@ -790,7 +826,7 @@ function cargarContactosTelEdit(empresaId, id) {
         ],
         initComplete: function (settings, json) {
             // ajustarTablas('tblContactosTel', heightTableCon);
-            loaderOut();
+            // loaderOut();
         },
     });
 
@@ -829,6 +865,7 @@ function mostrarClientes() {
 
     document.getElementById("clientes").style.display = "block";
     document.getElementById("contactos").style.display = "none";
+    tblClientes.draw(false);
 }
 
 function mostrarClientesModal() {
@@ -865,7 +902,10 @@ function mostrarContactos() {
     document.getElementById("contactos").style.display = "block";
 
     var tableCAll = $('#tblContactosAll').DataTable();
-    tableCAll.draw(false);
+    cargarContactosAll();
+
+    // tableCAll.draw(false);
+
 }
 
 function mostrarContactosModal() {
@@ -891,3 +931,4 @@ function mostrarContactosModal() {
     tableCTEdit.draw(false);
 
 }
+

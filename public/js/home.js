@@ -6,13 +6,13 @@ const TO_PATTERN = "DD/MM/YYYY HH:mm";
 const FROM_PATTERN_SHORT = "YYYY-MM-DD";
 const TO_PATTERN_SHORT = "DD/MM/YYYY";
 
-$(document).ajaxStart(function () {
-    loaderON();
-});
+// $(document).ajaxStart(function () {
+//     loaderON();
+// });
 
-$(document).ajaxStop(function () {
-    loaderOut();
-});
+// $(document).ajaxStop(function () {
+//     loaderOut();
+// });
 
 $.ajaxSetup({
     headers: {
@@ -21,13 +21,20 @@ $.ajaxSetup({
 });
 
 $(document).ready(function () {
-
 });
 
 function clientes() {
     window.location.href = serve + 'clientes';
 }
 
+function cxc() {
+    window.location.href = serve + 'cxc';
+}
+
 function usuarios() {
     window.location.href = serve + 'usuarios';
+}
+
+function catalogos() {
+    window.location.href = serve + 'catalogos';
 }

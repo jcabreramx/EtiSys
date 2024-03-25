@@ -5,12 +5,20 @@
 
         <div id="card_general" class="card" style="margin-top: 0; display: block">
             <div id="card_bodyClientes" class="card-body">
-                <div class="box_tooltip">
-                    <button {{ Popper::arrow('round')->theme('lightborder')->pop('Nuevo Cliente') }} class="box"
-                        alt="NUEVO CLIENTE" id="btnNuevoCliente" onclick="nuevoCliente()" type="button">
-                        <i class="fas fa-plus-circle"></i>
-                    </button>
-                </div>
+                @if (session('AccesoClientes') == 1 && session('CrearClientes') == 1)
+                    <div class="box_tooltip">
+                        <button {{ Popper::arrow('round')->theme('lightborder')->pop('Nuevo Cliente') }} class="box"
+                            alt="NUEVO CLIENTE" id="btnNuevoCliente" onclick="nuevoCliente()" type="button">
+                            <i class="fas fa-plus-circle"></i>
+                        </button>
+                    </div>
+                @else
+                    <div class="box_tooltip">
+                        <button class="box" type="button" style="cursor: not-allowed">
+                            <i class="fas fa-ban"></i>
+                        </button>
+                    </div>
+                @endif
                 <div class="row mb-1">
                     <ul class="nav nav-tabs col-sm-12 mb-2" id="custom-content-below-tab" role="tablist">
                         <li class="nav-item" id="nav_item_clientes" style="width: 13%">
@@ -32,11 +40,18 @@
                                     {{-- <input type="text" id="searchOportFolio" class="form-control ms-1 text-uppercase"
                                     placeholder="Folio"> --}}
                                     <select id="searchTipo" class="form-select ms-1 text-uppercase"
-                                        style="border-radius: 5px">
+                                        style="border-radius: 5px; font-weight: bold">
                                         <option value="">Tipo: CUALQUIERA</option>
                                         @foreach ($combo_tipo as $tipo)
-                                            <option value="{{ $tipo->vchTipoClienteID }}">({{ $tipo->vchTipoClienteID }})
-                                                {{ $tipo->vchDescripcion }}</option>
+                                            @if ($tipo->vchTipoClienteID == 'CTE ACTIVO')
+                                                <option value="{{ $tipo->vchTipoClienteID }}" selected>
+                                                    ({{ $tipo->vchTipoClienteID }})
+                                                    {{ $tipo->vchDescripcion }}</option>
+                                            @else
+                                                <option value="{{ $tipo->vchTipoClienteID }}">
+                                                    ({{ $tipo->vchTipoClienteID }})
+                                                    {{ $tipo->vchDescripcion }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                     <select id="searchGrupo" class="form-select ms-1 text-uppercase"
@@ -87,9 +102,9 @@
                                 <table id="tblClientes" class="hover stripe compact nowrap tblnombre"
                                     style="font-size: 70% !important; width: 100%;">
                                     <thead>
-                                        <tr class="bg-blue-table">
+                                        {{-- <tr class="bg-blue-table">
                                             <th colspan="9" class="text-center">CLIENTES / PROSPECTOS</th>
-                                        </tr>
+                                        </tr> --}}
                                         <tr class="bg-blue-table">
                                             <th>Clave</th>
                                             <th>Nombre</th>

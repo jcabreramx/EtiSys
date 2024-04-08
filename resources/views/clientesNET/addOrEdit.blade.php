@@ -1,8 +1,8 @@
-<div class="modal fullscreen-modal fade" id="AddOrEditCliente" tabindex="-1" role="dialog" data-backdrop="static"
+<div class="modal fullscreen-modal fade" id="AddOrEditClienteNET" tabindex="-1" role="dialog" data-backdrop="static"
     data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="background-color: #00000096">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <form id="formAddOrEditCliente">
+            <form id="formAddOrEditClienteNET">
                 {{ csrf_field() }} {{ method_field('POST') }}
 
                 <div class="modal-header bg-gray row text-center" id="headerCliente">
@@ -44,6 +44,11 @@
                                                 <select id="vchAgente" name="vchAgente" class="form-select text-uppercase"
                                                     style="border-radius: 5px">
                                                     <option value=""></option>
+                                                    @foreach ($combo_agente as $agente)
+                                                        <option value="{{ $agente->vchUsuarioID }}">
+                                                            ({{ $agente->vchUsuarioID }})
+                                                            {{ $agente->vchNombre }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -78,6 +83,11 @@
                                                 <select id="vchTipoCliente" name="vchTipoCliente" class="form-select text-uppercase"
                                                     style="border-radius: 5px">
                                                     <option value=""></option>
+                                                    @foreach ($combo_tipo as $tipo)
+                                                        <option value="{{ $tipo->vchTipoClienteID }}">
+                                                            ({{ $tipo->vchTipoClienteID }})
+                                                            {{ $tipo->vchDescripcion }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -91,6 +101,11 @@
                                                 <select id="vchSector" name="vchSector" class="form-select text-uppercase"
                                                     style="border-radius: 5px">
                                                     <option value=""></option>
+                                                    @foreach ($combo_sectores as $sector)
+                                                        <option value="{{ $sector->vchSectorID }}">
+                                                            ({{ $sector->vchSectorID }})
+                                                            {{ $sector->vchDescripcion }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-lg-2" style="text-align: right">
@@ -100,6 +115,11 @@
                                                 <select id="vchOrigen" name="vchOrigen" class="form-select text-uppercase"
                                                     style="border-radius: 5px">
                                                     <option value=""></option>
+                                                    @foreach ($combo_origen as $origen)
+                                                        <option value="{{ $origen->vchOrigenID }}">
+                                                            ({{ $origen->vchOrigenID }})
+                                                            {{ $origen->vchDescripcion }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -212,6 +232,11 @@
                                                 <select id="vchEstado" name="vchEstado" class="form-select text-uppercase"
                                                     style="border-radius: 5px">
                                                     <option value=""></option>
+                                                    @foreach ($combo_estados as $estados)
+                                                        <option value="{{ $estados->vchEstadoID }}">
+                                                            ({{ $estados->vchEstadoID }})
+                                                            {{ $estados->vchDescripcion }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-lg-2" style="text-align: right">
@@ -221,6 +246,11 @@
                                                 <select id="chGrupo" name="chGrupo" class="form-select text-uppercase"
                                                     style="border-radius: 5px">
                                                     <option value=""></option>
+                                                    @foreach ($combo_grupo as $grupo)
+                                                        <option value="{{ $grupo->chGrupoID }}">
+                                                            ({{ $grupo->chGrupoID }})
+                                                            {{ $grupo->varDescripcion }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\det_CP_ContactosEmpresas;
 use App\Models\mst_CP_Empresas;
 use App\Traits\PermisosTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
-class ClientesController extends Controller
+class ClientesNETController extends Controller
 {
     use PermisosTrait;
     public function __construct()
@@ -20,22 +21,56 @@ class ClientesController extends Controller
     {
         $this->permisos();
 
-        if (session('AccesoClientes') == 1) {
-            // $combo_tipo = DB::select('exec sp_cat_CP_TiposCliente_SelectAll');
-            // $combo_grupo = DB::select('exec sp_cat_CP_Grupos_SelectAll');
-            // $combo_origen = DB::select('exec sp_cat_CP_TiposContacto_SelectAll');
-            // $combo_agente = DB::select('exec sp_mst_CP_Usuarios_SelectAll');
-            // $combo_sectores = DB::select('exec sp_cat_CP_Sectores_SelectAll');
-            // $combo_estados = DB::select('exec sp_cat_CP_Estados_SelectAll');
+        // $page = request('page', 1);
+        // $pageSize = 15;
+        // $results = DB::select('SET NOCOUNT ON; EXEC sp_mst_CP_Empresas_Buscar ?, ?, ?, ?, ?, ?, ?, ?', [
+        //     '',
+        //     '',
+        //     '',
+        //     '',
+        //     '',
+        //     '',
+        //     '',
+        //     '',
+        // ]);
+        // $offset = ($page * $pageSize) - $pageSize;
+        // $data = array_slice($results, $offset, $pageSize, true);
+        // $clientes = new LengthAwarePaginator($data, count($data), $pageSize, $page);
+        // ini_set('max_execution_time', 180); //3 minutes
 
-            return view('clientes.index');
+        // $clientes = DB::table('v_Empresas')->paginate(100);
+
+        // return $clientes;
+
+        // $clientes = DB::select('SET NOCOUNT ON; EXEC sp_mst_CP_Empresas_Buscar ?, ?, ?, ?, ?, ?, ?, ?', [
+        //     '',
+        //     '',
+        //     '',
+        //     '',
+        //     '',
+        //     '',
+        //     '',
+        //     '',
+        // ]);
+        // $links = $clientes->links();
+        if (session('AccesoClientes') == 1) {
+            $combo_tipo = DB::select('exec sp_cat_CP_TiposCliente_SelectAll');
+            $combo_grupo = DB::select('exec sp_cat_CP_Grupos_SelectAll');
+            $combo_origen = DB::select('exec sp_cat_CP_TiposContacto_SelectAll');
+            $combo_agente = DB::select('exec sp_mst_CP_Usuarios_SelectAll');
+            $combo_sectores = DB::select('exec sp_cat_CP_Sectores_SelectAll');
+            $combo_estados = DB::select('exec sp_cat_CP_Estados_SelectAll');
+            // $contactos = det_CP_ContactosEmpresas::paginate(100);
+            // $contactos = DB::table('det_CP_ContactosEmpresas')->paginate(100);
+
+            return view('clientesNET.index', compact('combo_tipo', 'combo_grupo', 'combo_origen', 'combo_agente', 'combo_sectores', 'combo_estados'));
         } else {
             return redirect()->route('home');
         }
 
     }
 
-    public function apiClientes(Request $request)
+    public function apiClientesNET(Request $request)
     {
         // return $request;
         if ($request->nombre == null) {
@@ -57,7 +92,7 @@ class ClientesController extends Controller
         }
 
         if ($request->tipo == null) {
-            $tipo = 'CTE ACTIVO';
+            $tipo = '';
         } else {
             $tipo = $request->tipo;
         }
@@ -144,13 +179,81 @@ class ClientesController extends Controller
             ->make(true);
     }
 
-    public function getCliente(Request $request)
+    public function apiContactos(Request $request)
+    {
+
+        if ($request->empresaId == null) {
+            $id = '';
+        } else {
+            $id = $request->empresaId;
+        }
+
+        $contactos = DB::select('sp_det_CP_ContactosEmpresas_SelectByEmpresaId ?', [$id]);
+
+        return DataTables::of($contactos)
+            ->make(true);
+    }
+
+    public function apiContactosAll(Request $request)
+    {
+        if ($request->empresaId == null) {
+            $id = '';
+        } else {
+            $id = $request->empresaId;
+        }
+
+
+
+
+
+        // $contactos = det_CP_ContactosEmpresas::where('chContactoID', 'like', '%' . $chContactoID .  '%')
+        //                 ->orWhere('Solicitante', 'like', '%' . $texto .  '%')
+        //                 ->orWhere('Maquina', 'like', '%' . $texto .  '%')
+        //                 ->orWhere('Departamento', 'like', '%' . $texto .  '%')
+        //                 ->orWhere('Mes', 'like', '%' . $texto .  '%')
+        //                 ->orWhere('Titulo', 'like', '%' . $texto .  '%')
+        //                 ->orWhere('Categoria', 'like', '%' . $texto .  '%')
+        //                 ->orWhere('Asignado', 'like', '%' . $texto .  '%')
+        //                 ->orWhere('Prioridad', 'like', '%' . $texto .  '%')
+        //                 ->orWhere('Folio', 'like', '%' . $texto .  '%');
+
+
+
+
+
+
+
+
+
+
+        ini_set('max_execution_time', 180); //3 minutes
+        // $contactos = DB::table('det_CP_ContactosEmpresas')->limit(100)->get();
+        // $contactos = det_CP_ContactosEmpresas::all()->paginate(100);
+        $contactos = det_CP_ContactosEmpresas::limit(100)->get();
+
+        // return view('index', compact('$contactos'));
+        return DataTables::of($contactos)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+    public function apiContactosTel(Request $request)
+    {
+        $empresaId = $request->empresaId;
+        $id = $request->contactoId;
+        $contactosTel = DB::select('sp_det_CP_TelefonosContactos_SelectByContactoID ?, ?', [$empresaId, $id]);
+
+        return DataTables::of($contactosTel)
+            ->make(true);
+    }
+
+    public function getClienteNET(Request $request)
     {
         $cliente = DB::select('exec sp_mst_CP_Empresas_SelectById ?', [$request->id]);
         return $cliente;
     }
 
-    public function guardarCliente(Request $request)
+    public function guardarClienteNET(Request $request)
     {
         $folio_max = Db::table('mst_CP_Empresas')->max('vchEmpresaID');
         $folio = '000' . ($folio_max + 1);

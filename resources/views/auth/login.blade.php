@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="text-center">
-                        <img src="img/logo.png" alt="EtiSys">
+                        <img src="img/Logo ETICOM CURVAS.svg" width="300px" alt="EtiSys">
                     </div>
                     <div class="text-center">
                         <h5>acceso<b>ETISYSAdmin</b></h5>
@@ -21,7 +21,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-end">Email</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                <input id="email" type="email" class="form-control mt-2 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -35,7 +35,7 @@
                             <label for="password" class="col-md-4 col-form-label text-md-end">Password</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                <input id="password" type="password" class="form-control mt-2 @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">

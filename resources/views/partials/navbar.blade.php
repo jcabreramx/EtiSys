@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-primary-e shadow-sm p-0 mb-2">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/home') }}">
-            <img src="img/logo_blanco.png" alt="EtiSys" height="30">
+            <img src="img/Logo ETICOM puntos.svg" alt="EtiSys" height="30">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">

@@ -67,13 +67,21 @@
                     <div class="tab-content" id="div_catalogos">
                         <div class="tab-pane fade show active" id="agentes" role="tabpanel"
                             aria-labelledby="agentes-tab">
-                            <div class="box_tooltip">
-                                <button {{ Popper::arrow('round')->theme('lightborder')->pop('Nuevo Agente') }}
-                                    class="box" alt="NUEVO CATALOGO" id="btnNuevoAgente" onclick="nuevoAgente()"
-                                    type="button">
-                                    <i class="fas fa-plus-circle"></i>
-                                </button>
-                            </div>
+                            @if (session('AccesoCatalogos') == 1 && session('CrearCatalogos') == 1)
+                                <div class="box_tooltip">
+                                    <button {{ Popper::arrow('round')->theme('lightborder')->pop('Nuevo Agente') }}
+                                        class="box" alt="NUEVO CATALOGO" id="btnNuevoAgente" onclick="nuevoAgente()"
+                                        type="button">
+                                        <i class="fas fa-plus-circle"></i>
+                                    </button>
+                                </div>
+                            @else
+                                <div class="box_tooltip">
+                                    <button class="box" type="button" style="cursor: not-allowed">
+                                        <i class="fas fa-ban"></i>
+                                    </button>
+                                </div>
+                            @endif
                             <div class="col-lg-12 justify-content-sm-center">
                                 <div class="col-lg-12 input-group input-group-sm">
                                 </div>
@@ -103,8 +111,8 @@
                         <div class="tab-pane fade" id="proveedores" role="tabpanel" aria-labelledby="proveedores-tab">
                             <div class="box_tooltip">
                                 <button {{ Popper::arrow('round')->theme('lightborder')->pop('Nuevo Proveedor') }}
-                                    class="box" alt="NUEVO PROVEEDOR" id="btnNuevoProveedor" onclick="nuevoProveedor()"
-                                    type="button">
+                                    class="box" alt="NUEVO PROVEEDOR" id="btnNuevoProveedor"
+                                    onclick="nuevoProveedor()" type="button">
                                     <i class="fas fa-plus-circle"></i>
                                 </button>
                             </div>

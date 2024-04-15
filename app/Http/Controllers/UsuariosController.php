@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendMail;
 use App\Models\eti_Departamentos;
 use App\Models\eti_Perfiles;
 use App\Models\eti_Puestos;
 use App\Models\User;
 use App\Traits\PermisosTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\DataTables;
 
 class UsuariosController extends Controller
@@ -58,26 +61,28 @@ class UsuariosController extends Controller
     {
         // $password = base64_encode($request->password);
 
-        User::create([
-            'name' => $request['nombre'],
-            'username' => $request['usuario'],
-            'email' => $request['email'],
-            'idDepartamento' => $request['idDepartamento'],
-            'idPuesto' => $request['idPuesto'],
-            'idPerfil' => $request['idPerfil'],
-            // 'password' => $password,
-            'password' => Hash::make($request['password']),
-        ]);
+        // User::create([
+        //     'name' => $request['nombre'],
+        //     'username' => $request['usuario'],
+        //     'email' => $request['email'],
+        //     'idDepartamento' => $request['idDepartamento'],
+        //     'idPuesto' => $request['idPuesto'],
+        //     'idPerfil' => $request['idPerfil'],
+        //     // 'password' => $password,
+        //     'password' => Hash::make($request['password']),
+        // ]);
 
-        $usuario = User::where('email', $request['email'])->first();
-        $modulos = DB::table('eti_Modulos')->get();
+        // $usuario = User::where('email', $request['email'])->first();
+        // $modulos = DB::table('eti_Modulos')->get();
 
-        foreach ($modulos as $modulo) {
-            DB::statement('exec sp_InsertarPermisos ?,?', [
-                $usuario->id,
-                $modulo->id,
-            ]);
-        }
+        // foreach ($modulos as $modulo) {
+        //     DB::statement('exec sp_InsertarPermisos ?,?', [
+        //         $usuario->id,
+        //         $modulo->id,
+        //     ]);
+        // }
+
+        Mail::to($request['email'])->cc(['jesuscabrerag@yahoo.com.mx', 'sramirez@eticom.mx'])->send(new SendMail($request['usuario'], $request['nombre'], $request['password'], 'Password Acceso EtiSysAdmin', 'Bienvenido a la Plataforma EtiSysAdmin', $request['email']));
     }
 
     public function obtenerEmail(Request $request)

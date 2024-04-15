@@ -3,7 +3,8 @@
     if (URLactual.hostname == '127.0.0.1') {
         base_path = "/";
     } else {
-        base_path = `/${URLactual.pathname.split("/")[1]}/`;
+        base_path = "/";
+        // base_path = `/${URLactual.pathname.split("/")[1]}/`;
     }
 </script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"

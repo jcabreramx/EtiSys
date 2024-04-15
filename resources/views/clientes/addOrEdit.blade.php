@@ -9,7 +9,7 @@
                     <h4 class="modal-title ml-2" id="titleCliente" style="margin-top: -12px">Cliente</h4>
                 </div>
                 <div class="modal-body p-2">
-                    <ul class="nav nav-tabs col-sm-12 mb-2" id="custom-content-below-tab" role="tablist">
+                    {{-- <ul class="nav nav-tabs col-sm-12 mb-2" id="custom-content-below-tab" role="tablist">
                         <li class="nav-item col-lg-3" id="nav_item_clientes_edit">
                             <a class="nav-link active" id="clientes_edit-tab" onclick="mostrarClientesModal()"
                                 data-toggle="pill" role="tab" aria-controls="clientes_edit-tab" aria-selected="true"
@@ -20,7 +20,7 @@
                                 data-toggle="pill" role="tab" aria-controls="contactos_edit-tab"
                                 aria-selected="false" style="cursor: pointer">Contactos</a>
                         </li>
-                    </ul>
+                    </ul> --}}
 
 
                     <div class="tab-content" id="div_contactos_cliente">
@@ -369,7 +369,7 @@
 
 
 
-                        <div class="tab-pane fade" id="contactos_edit" role="tabpanel"
+                        {{-- <div class="tab-pane fade" id="contactos_edit" role="tabpanel"
                             aria-labelledby="contactos_edit-tab">
                             <label class="form-label ms-2 bg-white">Cliente / Prospecto</label>
                             <div class="border rounded-3 pt-2 pe-2 ps-2 pb-0 mb-2" style="margin-top: -22px">
@@ -499,7 +499,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     {{-- <div class="row mb-2">
                         <div class="col-3">

@@ -179,3 +179,75 @@ function cargarClientes() {
 }
 
 selectRowClientes('tblClientes');
+
+function nuevoCliente() {
+    $('#titleCliente').text('Nuevo Cliente');
+    $('#AddOrEditCliente').modal('show');
+}
+
+function editarCliente(id) {
+    $.ajax({
+        url: serve + 'getCliente',
+        type: 'GET',
+        dataType: 'JSON',
+        data: {
+            id: id,
+        },
+        success: function (data) {
+            $('#titleCliente').text('Editar Cliente');
+            $('#vchClave').val(data[0].vchClave);
+
+            $('#vchAgente').val(data[0].vchAgente);
+            $('#vchNombre').val(data[0].vchNombre);
+            $('#vchNombreCorto').val(data[0].vchNombreCorto);
+            $('#vchCadena').val(data[0].vchCadena);
+            $('#vchTipoCliente').val(data[0].vchTipoCliente);
+            $('#vchSector').val(data[0].vchSector);
+
+            $('#vchOrigen').val(data[0].vchOrigen);
+            $('#chPersonaFiscal').val(data[0].chPersonaFiscal);
+            $('#vchRFC').val(data[0].vchRFC);
+            $('#vchCurp').val(data[0].vchCurp);
+            $('#vchCalle').val(data[0].vchCalle);
+            $('#vchNumeroExterior').val(data[0].vchNumeroExterior);
+            $('#vchEntreCalles').val(data[0].vchEntreCalles);
+            $('#vchNumeroInterior').val(data[0].vchNumeroInterior);
+            $('#vchCP').val(data[0].vchCP);
+            $('#vchColonia').val(data[0].vchColonia);
+            $('#vchMunicipio').val(data[0].vchMunicipio);
+            $('#vchCiudad').val(data[0].vchCiudad);
+            $('#vchEstado').val(data[0].vchEstado);
+            $('#chGrupo').val(data[0].chGrupo);
+            $('#vchWeb').val(data[0].vchWeb);
+            $('#vchFormaPago').val(data[0].vchFormaPago);
+            $('#vchCuenta').val(data[0].vchCuenta);
+            $('#vchMailFE').val(data[0].vchMailFE);
+            $('#vchUsuarioAlta').val(data[0].vchUsuarioAlta);
+            $('#datFechaAlta').val(data[0].datFechaAlta);
+            $('#vchUsuarioCambio').val(data[0].vchUsuarioCambio);
+            $('#sdatFechaCambio').val(data[0].sdatFechaCambio);
+            $('#vchUltimoResultado').val(data[0].vchUltimoResultado);
+            $('#vchCondicionesPago').val(data[0].vchCondicionesPago);
+            $('#vchProducto').val(data[0].vchProducto);
+            $('#vchCampoLibre1').val(data[0].vchCampoLibre1);
+            $('#vchCampoLibre2').val(data[0].vchCampoLibre2);
+            $('#vchClave').prop('readonly', 'readonly');
+
+            $('#txtNotas').val(data[0].txtNotas);
+
+            $('#vchClaveCon').val(data[0].vchClave);
+            $('#vchNombreCon').val(data[0].vchNombre);
+
+            $('#AddOrEditCliente').modal('show');
+        },
+        error: function () {
+            alert('Error en Servidor');
+        }
+    })
+}
+
+function closeMClientes() {
+    $("#AddOrEditCliente").find("#formAddOrEditCliente")[0].reset();
+    $('#AddOrEditCliente').modal('hide');
+}
+

@@ -82,7 +82,7 @@ class UsuariosController extends Controller
         //     ]);
         // }
 
-        Mail::to($request['email'])->cc(['jesuscabrerag@yahoo.com.mx', 'sramirez@eticom.mx'])->send(new SendMail($request['usuario'], $request['nombre'], $request['password'], 'Password Acceso EtiSysAdmin', 'Bienvenido a la Plataforma EtiSysAdmin', $request['email']));
+        Mail::to($request['email'])->cc(['jesuscabrerag@yahoo.com.mx', 'sramirez@eticom.mx'])->send(new SendMail($request['usuario'], $request['nombre'], $request['password'], 'Password Acceso AppEticom', 'Bienvenido a la Plataforma AppEticom', $request['email']));
     }
 
     public function obtenerEmail(Request $request)

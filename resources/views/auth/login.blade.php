@@ -9,7 +9,7 @@
                         <img src="img/Logo ETICOM CURVAS.svg" width="300px" alt="EtiSys">
                     </div>
                     <div class="text-center">
-                        <h5>acceso<b>ETISYSAdmin</b></h5>
+                        <h5>acceso<b>APPETICOM</b></h5>
                     </div>
                 </div>
 

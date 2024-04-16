@@ -1,4 +1,4 @@
-<div class="modal fade" id="mod_Register" data-backdrop="static" tabindex="-1" role="dialog"
+<div class="modal" id="mod_Register" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true" style="background-color: #00000096">
     <div class="modal-dialog modal-md">
         <div class="modal-content card">

@@ -61,26 +61,26 @@ class UsuariosController extends Controller
     {
         // $password = base64_encode($request->password);
 
-        // User::create([
-        //     'name' => $request['nombre'],
-        //     'username' => $request['usuario'],
-        //     'email' => $request['email'],
-        //     'idDepartamento' => $request['idDepartamento'],
-        //     'idPuesto' => $request['idPuesto'],
-        //     'idPerfil' => $request['idPerfil'],
-        //     // 'password' => $password,
-        //     'password' => Hash::make($request['password']),
-        // ]);
+        User::create([
+            'name' => $request['nombre'],
+            'username' => $request['usuario'],
+            'email' => $request['email'],
+            'idDepartamento' => $request['idDepartamento'],
+            'idPuesto' => $request['idPuesto'],
+            'idPerfil' => $request['idPerfil'],
+            // 'password' => $password,
+            'password' => Hash::make($request['password']),
+        ]);
 
-        // $usuario = User::where('email', $request['email'])->first();
-        // $modulos = DB::table('eti_Modulos')->get();
+        $usuario = User::where('email', $request['email'])->first();
+        $modulos = DB::table('eti_Modulos')->get();
 
-        // foreach ($modulos as $modulo) {
-        //     DB::statement('exec sp_InsertarPermisos ?,?', [
-        //         $usuario->id,
-        //         $modulo->id,
-        //     ]);
-        // }
+        foreach ($modulos as $modulo) {
+            DB::statement('exec sp_InsertarPermisos ?,?', [
+                $usuario->id,
+                $modulo->id,
+            ]);
+        }
 
         Mail::to($request['email'])->cc(['jesuscabrerag@yahoo.com.mx', 'jesuscabrerag@yahoo.com.mx'])->send(new SendMail($request['usuario'], $request['nombre'], $request['password'], 'Password Acceso AppEticom', 'Bienvenido a la Plataforma AppEticom', $request['email']));
     }
